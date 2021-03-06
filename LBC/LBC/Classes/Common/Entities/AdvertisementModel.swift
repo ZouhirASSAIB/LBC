@@ -11,7 +11,7 @@ import Foundation
 struct AdvertisementModel: Decodable {
     let id, categoryID: Int?
     let title, advertisementDescription: String?
-    let price: Int?
+    let price: Double?
     let imagesURL: ImagesURL?
     let creationDate: String?
     let isUrgent: Bool?

@@ -7,6 +7,7 @@
 
 import Foundation
 
+// MARK: - AdvertisementsPresenter
 class AdvertisementsPresenter: ViewToPresenterAdvertisementsProtocol {
     
     // MARK: Properties

@@ -7,6 +7,7 @@
 
 import UIKit
 
+// MARK: - ActivityPresentable
 protocol ActivityPresentable {
     func presentActivity()
     func dismissActivity()
@@ -40,6 +41,7 @@ extension ActivityPresentable where Self: UIViewController {
     }
 }
 
+// MARK: - ErrorPresentable
 protocol ErrorPresentable {
     func present(_ error: Error)
 }

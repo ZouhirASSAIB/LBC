@@ -7,6 +7,7 @@
 
 import UIKit
 
+// MARK: - AdvertisementsViewController
 class AdvertisementsViewController: UIViewController {
     
     // MARK: - Lifecycle Methods
@@ -27,7 +28,9 @@ class AdvertisementsViewController: UIViewController {
     
     lazy var tableView: UITableView = {
         let tableView = UITableView()
-        tableView.rowHeight = 70
+        tableView.register(AdTableViewCell.self, forCellReuseIdentifier: AdTableViewCell.cellID)
+        tableView.rowHeight = 100
+        tableView.tableFooterView = UIView()
         tableView.dataSource = self
         tableView.delegate = self
         return tableView
@@ -62,13 +65,13 @@ extension AdvertisementsViewController: PresenterToViewAdvertisementsProtocol{
         }
     }
     
-    func showHUD() {
+    func presentActivity() {
         DispatchQueue.main.async {
             self.presentActivity()
         }
     }
     
-    func hideHUD() {
+    func dismissActivity() {
         DispatchQueue.main.async {
             self.dismissActivity()
         }
@@ -77,20 +80,31 @@ extension AdvertisementsViewController: PresenterToViewAdvertisementsProtocol{
     func deselectRowAt(row: Int) {
         self.tableView.deselectRow(at: IndexPath(row: row, section: 0), animated: true)
     }
-    
 }
 
 // MARK: - UITableView Delegate & Data Source
 extension AdvertisementsViewController: UITableViewDelegate, UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return presenter?.numberOfRowsInSection() ?? 0
+        let numberOfRowsInSection = presenter?.numberOfRowsInSection() ?? 0
+        
+        if numberOfRowsInSection == 0 {
+            self.tableView.setNoDataPlaceholder("No Advertisements fetched, try pull to refresh data.")
+        } else {
+            self.tableView.removeNoDataPlaceholder()
+        }
+        
+        return numberOfRowsInSection
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = UITableViewCell()
+        guard let cell = tableView.dequeueReusableCell(withIdentifier: AdTableViewCell.cellID,
+                                                       for: indexPath) as? AdTableViewCell else {
+            return UITableViewCell()
+        }
+        
         let ad = presenter?.getAdvertisement(indexPath: indexPath)
-        cell.textLabel?.text = ad?.title
+        cell.advertisement = ad
         return cell
     }
     

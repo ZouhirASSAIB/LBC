@@ -7,6 +7,7 @@
 
 import Foundation
 
+// MARK: - AdvertisementsInteractor
 class AdvertisementsInteractor: PresenterToInteractorAdvertisementsProtocol {
     
     // MARK: Properties

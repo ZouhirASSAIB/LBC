@@ -7,7 +7,8 @@
 
 import Foundation
 
+// MARK: - Constants
 class Constants{
     
-    public static let URL = "https://raw.githubusercontent.com/leboncoin/paperclip/master/"
+    public static let url = "https://raw.githubusercontent.com/leboncoin/paperclip/master/"
 }

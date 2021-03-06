@@ -7,7 +7,7 @@
 
 import Foundation
 
-
+// MARK: - HttpRequestError
 enum HttpRequestError: Error {
     case invalidResponse
     case unexpected

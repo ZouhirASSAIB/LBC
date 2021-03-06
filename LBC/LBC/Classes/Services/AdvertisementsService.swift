@@ -13,7 +13,7 @@ class AdvertisementsService {
     
     func getAdvertisementsService(success: @escaping (Advertisements) -> (), failure: @escaping (Error) -> ()) {
         
-        APIClient.shared.getArray(urlString: Endpoints.LISTING, success: { (arrayOfAdvertisements) in
+        APIClient.shared.getArray(urlString: Endpoints.listing, success: { (arrayOfAdvertisements) in
             success(arrayOfAdvertisements)
 
         }) { (error) in

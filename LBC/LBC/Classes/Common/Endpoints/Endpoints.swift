@@ -7,8 +7,9 @@
 
 import Foundation
 
+// MARK: - Endpoints
 struct Endpoints {
     
-    static let LISTING = "listing.json"
-    static let CATEGORIES = "categories.json"
+    static let listing = "listing.json"
+    static let categories = "categories.json"
 }

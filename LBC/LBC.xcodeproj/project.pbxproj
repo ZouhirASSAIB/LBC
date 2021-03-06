@@ -26,6 +26,14 @@
 		5F1341D225F26FD600B76B74 /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F1341D125F26FD600B76B74 /* Constants.swift */; };
 		5F1341DB25F2726400B76B74 /* Error+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F1341DA25F2726400B76B74 /* Error+Extension.swift */; };
 		5F1341E325F272D000B76B74 /* UIViewController+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F1341E225F272D000B76B74 /* UIViewController+Extension.swift */; };
+		5F26B75A25F3F21700647DCA /* UILabel+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F26B75925F3F21700647DCA /* UILabel+Extension.swift */; };
+		5F26B77725F3F7DF00647DCA /* UIImageView+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F26B77625F3F7DF00647DCA /* UIImageView+Extension.swift */; };
+		5F2E1C7325F378A5007EE103 /* UITableView+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F2E1C7225F378A5007EE103 /* UITableView+Extension.swift */; };
+		5F2E1C7825F381BA007EE103 /* UIView+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F2E1C7725F381BA007EE103 /* UIView+Extension.swift */; };
+		5F2E1C8225F38369007EE103 /* AdTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F2E1C8125F38369007EE103 /* AdTableViewCell.swift */; };
+		5F2E1C8C25F392F8007EE103 /* UIImageLoader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F2E1C8B25F392F8007EE103 /* UIImageLoader.swift */; };
+		5F2E1C9125F39372007EE103 /* ImageLoader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F2E1C9025F39372007EE103 /* ImageLoader.swift */; };
+		5F2E1CB325F3ED92007EE103 /* AppDateFormatter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F2E1CB225F3ED92007EE103 /* AppDateFormatter.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -71,6 +79,14 @@
 		5F1341D125F26FD600B76B74 /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
 		5F1341DA25F2726400B76B74 /* Error+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Error+Extension.swift"; sourceTree = "<group>"; };
 		5F1341E225F272D000B76B74 /* UIViewController+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIViewController+Extension.swift"; sourceTree = "<group>"; };
+		5F26B75925F3F21700647DCA /* UILabel+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UILabel+Extension.swift"; sourceTree = "<group>"; };
+		5F26B77625F3F7DF00647DCA /* UIImageView+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIImageView+Extension.swift"; sourceTree = "<group>"; };
+		5F2E1C7225F378A5007EE103 /* UITableView+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UITableView+Extension.swift"; sourceTree = "<group>"; };
+		5F2E1C7725F381BA007EE103 /* UIView+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIView+Extension.swift"; sourceTree = "<group>"; };
+		5F2E1C8125F38369007EE103 /* AdTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AdTableViewCell.swift; sourceTree = "<group>"; };
+		5F2E1C8B25F392F8007EE103 /* UIImageLoader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIImageLoader.swift; sourceTree = "<group>"; };
+		5F2E1C9025F39372007EE103 /* ImageLoader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageLoader.swift; sourceTree = "<group>"; };
+		5F2E1CB225F3ED92007EE103 /* AppDateFormatter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDateFormatter.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -290,7 +306,8 @@
 		5F1341BB25F24EC800B76B74 /* View */ = {
 			isa = PBXGroup;
 			children = (
-				5F1341BC25F24F0400B76B74 /* AdvertisementsViewController.swift */,
+				5F2E1C7C25F38326007EE103 /* Cells */,
+				5F2E1C7D25F38333007EE103 /* ViewControllers */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -299,6 +316,9 @@
 			isa = PBXGroup;
 			children = (
 				5F1341D125F26FD600B76B74 /* Constants.swift */,
+				5F2E1C9025F39372007EE103 /* ImageLoader.swift */,
+				5F2E1C8B25F392F8007EE103 /* UIImageLoader.swift */,
+				5F2E1CB225F3ED92007EE103 /* AppDateFormatter.swift */,
 				5F1341D925F271AE00B76B74 /* Extensions */,
 			);
 			path = Utils;
@@ -309,8 +329,28 @@
 			children = (
 				5F1341DA25F2726400B76B74 /* Error+Extension.swift */,
 				5F1341E225F272D000B76B74 /* UIViewController+Extension.swift */,
+				5F2E1C7225F378A5007EE103 /* UITableView+Extension.swift */,
+				5F2E1C7725F381BA007EE103 /* UIView+Extension.swift */,
+				5F26B75925F3F21700647DCA /* UILabel+Extension.swift */,
+				5F26B77625F3F7DF00647DCA /* UIImageView+Extension.swift */,
 			);
 			path = Extensions;
+			sourceTree = "<group>";
+		};
+		5F2E1C7C25F38326007EE103 /* Cells */ = {
+			isa = PBXGroup;
+			children = (
+				5F2E1C8125F38369007EE103 /* AdTableViewCell.swift */,
+			);
+			path = Cells;
+			sourceTree = "<group>";
+		};
+		5F2E1C7D25F38333007EE103 /* ViewControllers */ = {
+			isa = PBXGroup;
+			children = (
+				5F1341BC25F24F0400B76B74 /* AdvertisementsViewController.swift */,
+			);
+			path = ViewControllers;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -442,21 +482,29 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				5F2E1C8225F38369007EE103 /* AdTableViewCell.swift in Sources */,
 				5F13416525F22E9B00B76B74 /* AdvertisementsProtocol.swift in Sources */,
+				5F2E1C8C25F392F8007EE103 /* UIImageLoader.swift in Sources */,
+				5F26B75A25F3F21700647DCA /* UILabel+Extension.swift in Sources */,
+				5F26B77725F3F7DF00647DCA /* UIImageView+Extension.swift in Sources */,
 				5F1341BD25F24F0400B76B74 /* AdvertisementsViewController.swift in Sources */,
 				5F1341A625F24AC800B76B74 /* AdvertisementsPresenter.swift in Sources */,
 				5F13415525F2260A00B76B74 /* AdvertisementModel.swift in Sources */,
 				5F13418E25F2367900B76B74 /* APIClient.swift in Sources */,
 				5F13418625F235F400B76B74 /* APIManager.swift in Sources */,
+				5F2E1CB325F3ED92007EE103 /* AppDateFormatter.swift in Sources */,
 				5F1341E325F272D000B76B74 /* UIViewController+Extension.swift in Sources */,
+				5F2E1C7825F381BA007EE103 /* UIView+Extension.swift in Sources */,
 				5F1341B325F24D8000B76B74 /* AdvertisementsRouter.swift in Sources */,
 				5F1341D225F26FD600B76B74 /* Constants.swift in Sources */,
 				5F13410F25F2222200B76B74 /* AppDelegate.swift in Sources */,
 				5F13415A25F2290400B76B74 /* CategoryModel.swift in Sources */,
+				5F2E1C9125F39372007EE103 /* ImageLoader.swift in Sources */,
 				5F1341DB25F2726400B76B74 /* Error+Extension.swift in Sources */,
 				5F13417B25F2343600B76B74 /* AdvertisementsService.swift in Sources */,
 				5F13417225F230DB00B76B74 /* AdvertisementsInteractor.swift in Sources */,
 				5F13419425F23D3900B76B74 /* Endpoints.swift in Sources */,
+				5F2E1C7325F378A5007EE103 /* UITableView+Extension.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

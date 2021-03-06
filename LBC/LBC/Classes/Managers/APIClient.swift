@@ -7,6 +7,7 @@
 
 import Foundation
 
+// MARK: - APIClient
 class APIClient {
     
     var baseURL: URL?
@@ -25,9 +26,9 @@ class APIClient {
             return
         }
         
+        // Create the HTTP request
         let request = URLRequest(url: url)
         
-        // Create the HTTP request
         let task = URLSession.shared.dataTask(with: request) { (data, response, error) in
             
             if let error = error {

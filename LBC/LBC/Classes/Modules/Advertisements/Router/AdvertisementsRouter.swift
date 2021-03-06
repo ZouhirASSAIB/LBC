@@ -7,6 +7,7 @@
 
 import UIKit
 
+// MARK: - AdvertisementsRouter
 class AdvertisementsRouter: PresenterToRouterAdvertisementsProtocol {
     
     // MARK: Static methods

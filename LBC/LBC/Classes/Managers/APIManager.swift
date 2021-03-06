@@ -7,11 +7,10 @@
 
 import Foundation
 
+// MARK: - APIManager
 class APIManager {
     
     static let shared = { APIManager() }()
     
-    lazy var baseURL: String = {
-        return Constants.URL
-    }()
+    lazy var baseURL: String = { return Constants.url }()
 }
