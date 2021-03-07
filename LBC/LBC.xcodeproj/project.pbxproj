@@ -28,6 +28,7 @@
 		5F1341E325F272D000B76B74 /* UIViewController+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F1341E225F272D000B76B74 /* UIViewController+Extension.swift */; };
 		5F26B75A25F3F21700647DCA /* UILabel+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F26B75925F3F21700647DCA /* UILabel+Extension.swift */; };
 		5F26B77725F3F7DF00647DCA /* UIImageView+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F26B77625F3F7DF00647DCA /* UIImageView+Extension.swift */; };
+		5F26B77C25F4CC2100647DCA /* CategoriesService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F26B77B25F4CC2100647DCA /* CategoriesService.swift */; };
 		5F2E1C7325F378A5007EE103 /* UITableView+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F2E1C7225F378A5007EE103 /* UITableView+Extension.swift */; };
 		5F2E1C7825F381BA007EE103 /* UIView+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F2E1C7725F381BA007EE103 /* UIView+Extension.swift */; };
 		5F2E1C8225F38369007EE103 /* AdTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F2E1C8125F38369007EE103 /* AdTableViewCell.swift */; };
@@ -81,6 +82,7 @@
 		5F1341E225F272D000B76B74 /* UIViewController+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIViewController+Extension.swift"; sourceTree = "<group>"; };
 		5F26B75925F3F21700647DCA /* UILabel+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UILabel+Extension.swift"; sourceTree = "<group>"; };
 		5F26B77625F3F7DF00647DCA /* UIImageView+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIImageView+Extension.swift"; sourceTree = "<group>"; };
+		5F26B77B25F4CC2100647DCA /* CategoriesService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CategoriesService.swift; sourceTree = "<group>"; };
 		5F2E1C7225F378A5007EE103 /* UITableView+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UITableView+Extension.swift"; sourceTree = "<group>"; };
 		5F2E1C7725F381BA007EE103 /* UIView+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIView+Extension.swift"; sourceTree = "<group>"; };
 		5F2E1C8125F38369007EE103 /* AdTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AdTableViewCell.swift; sourceTree = "<group>"; };
@@ -249,6 +251,7 @@
 			isa = PBXGroup;
 			children = (
 				5F13417A25F2343600B76B74 /* AdvertisementsService.swift */,
+				5F26B77B25F4CC2100647DCA /* CategoriesService.swift */,
 			);
 			path = Services;
 			sourceTree = "<group>";
@@ -499,6 +502,7 @@
 				5F1341D225F26FD600B76B74 /* Constants.swift in Sources */,
 				5F13410F25F2222200B76B74 /* AppDelegate.swift in Sources */,
 				5F13415A25F2290400B76B74 /* CategoryModel.swift in Sources */,
+				5F26B77C25F4CC2100647DCA /* CategoriesService.swift in Sources */,
 				5F2E1C9125F39372007EE103 /* ImageLoader.swift in Sources */,
 				5F1341DB25F2726400B76B74 /* Error+Extension.swift in Sources */,
 				5F13417B25F2343600B76B74 /* AdvertisementsService.swift in Sources */,

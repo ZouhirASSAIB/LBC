@@ -29,7 +29,7 @@ class AdvertisementsViewController: UIViewController {
     lazy var tableView: UITableView = {
         let tableView = UITableView()
         tableView.register(AdTableViewCell.self, forCellReuseIdentifier: AdTableViewCell.cellID)
-        tableView.rowHeight = 100
+        tableView.rowHeight = 120
         tableView.tableFooterView = UIView()
         tableView.dataSource = self
         tableView.delegate = self
@@ -103,8 +103,17 @@ extension AdvertisementsViewController: UITableViewDelegate, UITableViewDataSour
             return UITableViewCell()
         }
         
-        let ad = presenter?.getAdvertisement(indexPath: indexPath)
-        cell.advertisement = ad
+        let adImage = presenter?.getAdvertisementImage(indexPath: indexPath)
+        let adTitle = presenter?.getAdvertisementTitle(indexPath: indexPath)
+        let adPrice = presenter?.getAdvertisementPrice(indexPath: indexPath)
+        let adCreationDate = presenter?.getAdvertisementCreationDate(indexPath: indexPath)
+        let adCategoryName = presenter?.getAdvertisementCategoryName(indexPath: indexPath)
+        let isAdUrgent = presenter?.isAdvertisementUrgent(indexPath: indexPath)
+        
+        cell.setCell(thumbURL: adImage, title: adTitle, price: adPrice,
+                     creationDate: adCreationDate, categoryName: adCategoryName,
+                     isUrgent: isAdUrgent)
+              
         return cell
     }
     

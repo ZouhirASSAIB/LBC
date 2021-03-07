@@ -33,7 +33,13 @@ protocol ViewToPresenterAdvertisementsProtocol: class {
     func refresh()
     
     func numberOfRowsInSection() -> Int
-    func getAdvertisement(indexPath: IndexPath) -> AdvertisementModel?
+    
+    func getAdvertisementImage(indexPath: IndexPath) -> URL?
+    func getAdvertisementTitle(indexPath: IndexPath) -> String?
+    func getAdvertisementPrice(indexPath: IndexPath) -> String?
+    func getAdvertisementCreationDate(indexPath: IndexPath)-> String?
+    func getAdvertisementCategoryName(indexPath: IndexPath)-> String?
+    func isAdvertisementUrgent(indexPath: IndexPath)-> Bool?
     
     func didSelectRowAt(index: Int)
     func deselectRowAt(index: Int)
@@ -59,6 +65,8 @@ protocol InteractorToPresenterAdvertisementsProtocol: class {
     
     func getAdvertisementSuccess(_ advertisement: AdvertisementModel)
     func getAdvertisementFailure()
+    
+    func fetchCategoriesSuccess(categories: Categories)
     
 }
 
