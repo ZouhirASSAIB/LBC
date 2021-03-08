@@ -7,11 +7,9 @@
 
 import Foundation
 
-class CategoriesService {
+class CategoriesService : CategoriesAPIServiceProtocol {
     
-    static let shared = { CategoriesService() }()
-    
-    func getCategoriesService(success: @escaping (Categories) -> (), failure: @escaping (Error) -> ()) {
+    func getCategories(success: @escaping (Categories) -> (), failure: @escaping (Error) -> ()) {
         
         APIClient.shared.getArray(urlString: Endpoints.categories, success: { (arrayOfCategories) in
             success(arrayOfCategories)

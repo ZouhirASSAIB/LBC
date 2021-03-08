@@ -27,6 +27,7 @@ protocol ViewToPresenterAdvertisementsProtocol: class {
     var router: PresenterToRouterAdvertisementsProtocol? { get set }
     
     var advertisements: Advertisements? { get set }
+    var categories: Categories? { get set }
     
     func viewDidLoad()
     
@@ -51,6 +52,8 @@ protocol ViewToPresenterAdvertisementsProtocol: class {
 protocol PresenterToInteractorAdvertisementsProtocol: class {
     
     var presenter: InteractorToPresenterAdvertisementsProtocol? { get set }
+    var advertisementsAPIService: AdvertisementsAPIServiceProtocol?{ get set }
+    var categoriesAPIService: CategoriesAPIServiceProtocol?{ get set }
     
     func loadAdvertisements()
     func retrieveAdvertisement(at index: Int)

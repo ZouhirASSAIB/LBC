@@ -24,6 +24,8 @@ class AdvertisementsRouter: PresenterToRouterAdvertisementsProtocol {
         viewController.presenter?.view = viewController
         viewController.presenter?.interactor = AdvertisementsInteractor()
         viewController.presenter?.interactor?.presenter = presenter
+        viewController.presenter?.interactor?.categoriesAPIService = CategoriesService()
+        viewController.presenter?.interactor?.advertisementsAPIService = AdvertisementsService()
         
         return navigationController
     }

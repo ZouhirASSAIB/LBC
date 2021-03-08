@@ -12,18 +12,22 @@ class AdvertisementsInteractor: PresenterToInteractorAdvertisementsProtocol {
     
     // MARK: Properties
     weak var presenter: InteractorToPresenterAdvertisementsProtocol?
+    
+    var advertisementsAPIService: AdvertisementsAPIServiceProtocol?
+    var categoriesAPIService: CategoriesAPIServiceProtocol?
+    
     var advertisements: Advertisements?
     var categories: Categories?
     
     func loadAdvertisements() {
         print("Interactor receives the request from Presenter to load categories and advertisements from the server.")
         
-        CategoriesService.shared.getCategoriesService(success: { (categories) in
+        self.categoriesAPIService?.getCategories(success: { (categories) in
             self.categories = categories
             self.presenter?.fetchCategoriesSuccess(categories: categories)
         }) { (error) in }
         
-        AdvertisementsService.shared.getAdvertisementsService(success: { (advertisements) in
+        self.advertisementsAPIService?.getAdvertisements(success: { (advertisements) in
             
             self.advertisements = advertisements.sorted {
                 
@@ -36,11 +40,8 @@ class AdvertisementsInteractor: PresenterToInteractorAdvertisementsProtocol {
                     return false
                 }
                 
-                if (firstIsUrgent && !secondIsUrgent) {
-                    return (firstIsUrgent && !secondIsUrgent)
-                } else {
-                    return firstDate.compare(secondDate) == .orderedDescending
-                }
+                return firstIsUrgent == secondIsUrgent ? firstDate.compare(secondDate) == .orderedDescending :
+                    (firstIsUrgent && !secondIsUrgent)
             }
             
             if let advertisements = self.advertisements {

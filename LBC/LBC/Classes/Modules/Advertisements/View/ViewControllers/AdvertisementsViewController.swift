@@ -88,11 +88,8 @@ extension AdvertisementsViewController: UITableViewDelegate, UITableViewDataSour
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         let numberOfRowsInSection = presenter?.numberOfRowsInSection() ?? 0
         
-        if numberOfRowsInSection == 0 {
-            self.tableView.setNoDataPlaceholder("No Advertisements fetched, try pull to refresh data.")
-        } else {
+        numberOfRowsInSection == 0 ? self.tableView.setNoDataPlaceholder("No Advertisements fetched, try pull to refresh data.") :
             self.tableView.removeNoDataPlaceholder()
-        }
         
         return numberOfRowsInSection
     }

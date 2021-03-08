@@ -7,11 +7,9 @@
 
 import Foundation
 
-class AdvertisementsService {
+class AdvertisementsService : AdvertisementsAPIServiceProtocol {
     
-    static let shared = { AdvertisementsService() }()
-    
-    func getAdvertisementsService(success: @escaping (Advertisements) -> (), failure: @escaping (Error) -> ()) {
+    func getAdvertisements(success: @escaping (Advertisements) -> (), failure: @escaping (Error) -> ()) {
         
         APIClient.shared.getArray(urlString: Endpoints.listing, success: { (arrayOfAdvertisements) in
             success(arrayOfAdvertisements)
