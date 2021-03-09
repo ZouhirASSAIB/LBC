@@ -55,6 +55,9 @@ protocol PresenterToInteractorAdvertisementsProtocol: class {
     var advertisementsAPIService: AdvertisementsAPIServiceProtocol?{ get set }
     var categoriesAPIService: CategoriesAPIServiceProtocol?{ get set }
     
+    var advertisements: Advertisements? { get set }
+    var categories: Categories? { get set }
+    
     func loadAdvertisements()
     func retrieveAdvertisement(at index: Int)
 }

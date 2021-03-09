@@ -33,12 +33,9 @@ class AdvertisementsRouter: PresenterToRouterAdvertisementsProtocol {
     // MARK: - Navigation
     func pushToAdvertisementDetail(on view: PresenterToViewAdvertisementsProtocol, with advertisement: AdvertisementModel) {
         print("AdvertisementsRouter is instructed to push AdvertisementDetailViewController onto the navigation stack.")
-//        let quoteDetailViewController = AdvertisementDetailRouter.createModule(with: advertisement)
-//        
-//        let viewController = view as! AdvertisementsViewController
-//        viewController.navigationController?
-//            .pushViewController(AdvertisementDetailViewController, animated: true)
+        let advertisementDetailViewController = AdvertisementDetailRouter.createModule(with: advertisement)
         
+        let viewController = view as! AdvertisementsViewController
+        viewController.navigationController?.pushViewController(advertisementDetailViewController, animated: true)
     }
-    
 }
