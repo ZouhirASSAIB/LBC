@@ -48,12 +48,12 @@ class AdvertisementsPresenter: ViewToPresenterAdvertisementsProtocol {
     
     func getAdvertisementImage(indexPath: IndexPath) -> URL? {
         guard let advertisement = self.getAdvertisement(indexPath: indexPath),
-              let thumb = advertisement.imagesURL?.thumb,
-              let thumbURL = URL(string:thumb) else {
+              let small = advertisement.imagesURL?.small,
+              let smallURL = URL(string:small) else {
             return nil
         }
         
-        return thumbURL
+        return smallURL
     }
     
     func getAdvertisementTitle(indexPath: IndexPath) -> String? {

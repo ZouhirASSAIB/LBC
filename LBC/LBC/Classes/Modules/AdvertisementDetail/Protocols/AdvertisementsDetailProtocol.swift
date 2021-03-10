@@ -10,15 +10,12 @@ import UIKit
 // MARK: View Output (Presenter -> View)
 protocol PresenterToViewAdvertisementDetailProtocol: class {
     
-    func onGetImageFromURLSuccess(smallURL:URL?, title: String?,
-                                  description:String?, price: String?,
-                                  creationDate: String?, categoryName: String?,
-                                  isUrgent:Bool?, siret: String?)
+    func onGetImageFromURLSuccess(thumbImage:UIImage)
     
     func onGetImageFromURLFailure(title: String?,
                                   description:String?, price: String?,
-                                  creationDate: String?, categoryName: String?,
-                                  isUrgent:Bool?, siret: String?)
+                                  creationDate: String?, isUrgent:Bool?,
+                                  siret: String?)
 }
 
 
@@ -49,7 +46,7 @@ protocol PresenterToInteractorAdvertisementDetailProtocol: class {
 // MARK: Interactor Output (Interactor -> Presenter)
 protocol InteractorToPresenterAdvertisementDetailProtocol: class {
     
-    func getImageFromURLSuccess(advertisement: AdvertisementModel, data: Data?)
+    func getImageFromURLSuccess(image: UIImage)
     func getImageFromURLFailure(advertisement: AdvertisementModel)
 }
 

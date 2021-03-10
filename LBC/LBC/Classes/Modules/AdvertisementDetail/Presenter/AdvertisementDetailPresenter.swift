@@ -5,7 +5,7 @@
 //  Created by Zouhair ASSAIB on 09/03/2021.
 //
 
-import Foundation
+import UIKit
 
 class AdvertisementDetailPresenter: ViewToPresenterAdvertisementDetailProtocol {
     
@@ -23,28 +23,26 @@ class AdvertisementDetailPresenter: ViewToPresenterAdvertisementDetailProtocol {
 
 extension AdvertisementDetailPresenter: InteractorToPresenterAdvertisementDetailProtocol {
     
-    func getImageFromURLSuccess(advertisement: AdvertisementModel, data: Data?) {
+    func getImageFromURLSuccess(image: UIImage) {
         print("Presenter receives the result from Interactor after it's done its job.")
         
-        if let small = advertisement.imagesURL?.small,
-           let smallURL = URL(string: small),
-           let price = advertisement.price {
-            view?.onGetImageFromURLSuccess(smallURL: smallURL, title: advertisement.title,
-                                           description: advertisement.advertisementDescription,
-                                           price: NumberFormatter.localizedString(from: NSNumber(value: price), number: .currency),
-                                           creationDate: advertisement.creationDate, categoryName: advertisement.creationDate,
-                                           isUrgent: advertisement.isUrgent, siret: advertisement.siret)
-        }
+        view?.onGetImageFromURLSuccess(thumbImage: image)
     }
     
     func getImageFromURLFailure(advertisement: AdvertisementModel) {
         print("Presenter receives the result from Interactor after it's done its job.")
+        
+        let realDate = AppDateFormatter.shared.isoDate(from: advertisement.creationDate)
+        let longDateShortTime = AppDateFormatter.shared.longDateShortTimeString(from: realDate)
+        var priceNumber:String? = nil
+        
         if let price = advertisement.price {
-            view?.onGetImageFromURLFailure(title: advertisement.title,
-                                           description: advertisement.advertisementDescription,
-                                           price: NumberFormatter.localizedString(from: NSNumber(value: price), number: .currency),
-                                           creationDate: advertisement.creationDate, categoryName: advertisement.creationDate,
-                                           isUrgent: advertisement.isUrgent, siret: advertisement.siret)
+            priceNumber = NumberFormatter.localizedString(from: NSNumber(value: price) , number: .currency)
         }
+        
+        view?.onGetImageFromURLFailure(title: advertisement.title,
+                                       description: advertisement.advertisementDescription,
+                                       price: priceNumber, creationDate: longDateShortTime,
+                                       isUrgent: advertisement.isUrgent, siret: advertisement.siret)
     }
 }

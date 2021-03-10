@@ -5,7 +5,7 @@
 //  Created by Zouhair ASSAIB on 09/03/2021.
 //
 
-import Foundation
+import UIKit
 
 class AdvertisementDetailInteractor: PresenterToInteractorAdvertisementDetailProtocol {
     
@@ -16,27 +16,35 @@ class AdvertisementDetailInteractor: PresenterToInteractorAdvertisementDetailPro
     func getImageDataFromURL() {
         print("Interactor receives the request from Presenter to get image data from the server.")
         
-        if let small = advertisement?.imagesURL?.small,
-           let smallURL = URL(string: small) {
+        if let advertisement = self.advertisement {
             
-            let task = URLSession.shared.dataTask(with: smallURL) { data, response, error in
-                
-                if let data = data {
-                    self.presenter?.getImageFromURLSuccess(advertisement: self.advertisement!, data: data)
-                    return
-                }
-                
-                guard let error = error else {
-                    return
-                }
-                
-                guard (error as NSError).code == NSURLErrorCancelled else {
-                    self.presenter?.getImageFromURLFailure(advertisement: self.advertisement!)
-                    return
-                }
-            }
+            self.presenter?.getImageFromURLFailure(advertisement: advertisement)
             
-            task.resume()
+            if let thumb = advertisement.imagesURL?.thumb,
+               let thumbURL = URL(string: thumb) {
+                    
+                    let task = URLSession.shared.dataTask(with: thumbURL) { data, response, error in
+                        
+                        if let data = data, let image = UIImage(data: data) {
+                            self.presenter?.getImageFromURLSuccess(image: image)
+                            return
+                        }
+                        
+                        guard let error = error else {
+                            self.presenter?.getImageFromURLFailure(advertisement: advertisement)
+                            return
+                        }
+                        
+                        guard (error as NSError).code == NSURLErrorCancelled else {
+                            self.presenter?.getImageFromURLFailure(advertisement: advertisement)
+                            return
+                        }
+                    }
+                    
+                    task.resume()
+                } else {
+                    self.presenter?.getImageFromURLFailure(advertisement: advertisement)
+                }
         }
     }
 }

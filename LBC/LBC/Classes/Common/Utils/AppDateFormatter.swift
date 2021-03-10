@@ -27,7 +27,12 @@ class AppDateFormatter {
         return dateFormatter
     }()
 
-    func isoDate(from string: String) -> Date? {
+    func isoDate(from string: String?) -> Date? {
+        
+        guard let string = string else {
+            return nil
+        }
+        
         return isoDateFormatter.date(from: string)
     }
     
@@ -35,7 +40,12 @@ class AppDateFormatter {
         return isoDateFormatter.string(from: date)
     }
     
-    func longDateShortTimeString(from date: Date) -> String {
+    func longDateShortTimeString(from date: Date?) -> String? {
+        
+        guard let date = date else {
+            return nil
+        }
+        
         return longDateShortTimeFormatter.string(from: date)
     }
 }
