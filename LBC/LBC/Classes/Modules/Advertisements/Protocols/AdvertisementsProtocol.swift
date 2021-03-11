@@ -28,6 +28,7 @@ protocol ViewToPresenterAdvertisementsProtocol: class {
     
     var advertisements: Advertisements? { get set }
     var categories: Categories? { get set }
+    var categoryID: Int? { get set }
     
     func viewDidLoad()
     
@@ -45,6 +46,7 @@ protocol ViewToPresenterAdvertisementsProtocol: class {
     func didSelectRowAt(index: Int)
     func deselectRowAt(index: Int)
 
+    func presentCategories()
 }
 
 
@@ -58,8 +60,10 @@ protocol PresenterToInteractorAdvertisementsProtocol: class {
     var advertisements: Advertisements? { get set }
     var categories: Categories? { get set }
     
-    func loadAdvertisements()
+    func loadAdvertisements(categoryID: Int?)
     func retrieveAdvertisement(at index: Int)
+    
+    func presentCategories()
 }
 
 
@@ -74,6 +78,7 @@ protocol InteractorToPresenterAdvertisementsProtocol: class {
     
     func fetchCategoriesSuccess(categories: Categories)
     
+    func getCategoriesSuccess(_ categories: Categories)
 }
 
 
@@ -82,5 +87,7 @@ protocol PresenterToRouterAdvertisementsProtocol: class {
     
     static func createModule() -> UINavigationController
     
-    func pushToAdvertisementDetail(on view: PresenterToViewAdvertisementsProtocol, with advertisement: AdvertisementModel)
+    func presentAdvertisementDetail(on view: PresenterToViewAdvertisementsProtocol, with advertisement: AdvertisementModel)
+    
+    func presentCategories(on view: PresenterToViewAdvertisementsProtocol, with categories: Categories)
 }

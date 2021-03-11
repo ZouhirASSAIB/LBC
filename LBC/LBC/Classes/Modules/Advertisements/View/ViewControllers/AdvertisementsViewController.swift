@@ -50,7 +50,7 @@ extension AdvertisementsViewController: ActivityPresentable, ErrorPresentable {}
 extension AdvertisementsViewController: PresenterToViewAdvertisementsProtocol{
     
     func onFetchAdvertisementsSuccess() {
-        print("View receives the response from Presenter and updates itself.")
+        print("AdvertisementsViewController receives the response from Presenter and updates itself.")
         DispatchQueue.main.async {
             self.tableView.reloadData()
             self.refreshControl.endRefreshing()
@@ -131,6 +131,10 @@ extension AdvertisementsViewController {
             // Fallback on earlier versions
         }
         
+        let categoriesBarButtonItem = UIBarButtonItem(title: "Categories", style: .plain, target: self, action: #selector(showCategories))
+        categoriesBarButtonItem.tintColor = .orange
+        self.navigationItem.rightBarButtonItem = categoriesBarButtonItem
+        
         self.view.addSubview(tableView)
         tableView.addSubview(refreshControl)
         
@@ -139,5 +143,13 @@ extension AdvertisementsViewController {
         tableView.heightAnchor.constraint(equalTo: self.view.heightAnchor).isActive = true
         
         self.navigationItem.title = "LBC"
+    }
+}
+
+// MARK: - Actions
+extension AdvertisementsViewController {
+    
+    @objc func showCategories(sender: UIBarButtonItem) {
+        presenter?.presentCategories()
     }
 }

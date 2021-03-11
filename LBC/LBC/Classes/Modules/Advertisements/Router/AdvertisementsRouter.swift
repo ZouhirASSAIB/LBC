@@ -31,11 +31,19 @@ class AdvertisementsRouter: PresenterToRouterAdvertisementsProtocol {
     }
     
     // MARK: - Navigation
-    func pushToAdvertisementDetail(on view: PresenterToViewAdvertisementsProtocol, with advertisement: AdvertisementModel) {
-        print("AdvertisementsRouter is instructed to push AdvertisementDetailViewController onto the navigation stack.")
+    func presentAdvertisementDetail(on view: PresenterToViewAdvertisementsProtocol, with advertisement: AdvertisementModel) {
+        print("AdvertisementsRouter is instructed to present AdvertisementDetailViewController.")
         let advertisementDetailViewController = AdvertisementDetailRouter.createModule(with: advertisement)
         
         let viewController = view as! AdvertisementsViewController
-        viewController.navigationController?.pushViewController(advertisementDetailViewController, animated: true)
+        viewController.present(advertisementDetailViewController, animated: true)
+    }
+    
+    func presentCategories(on view: PresenterToViewAdvertisementsProtocol, with categories: Categories) {
+        print("AdvertisementsRouter is instructed to present CategoriesViewController.")
+        let categoriesViewController = CategoriesRouter.createModule(with: categories) as! CategoriesViewController
+        let advertisementsViewController = view as! AdvertisementsViewController
+        categoriesViewController.presenter?.selectedCategoryID = advertisementsViewController.presenter?.categoryID
+        advertisementsViewController.present(categoriesViewController, animated: true)
     }
 }

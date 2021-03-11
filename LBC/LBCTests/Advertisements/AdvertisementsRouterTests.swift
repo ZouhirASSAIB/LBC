@@ -27,7 +27,7 @@ class AdvertisementsRouterTests: XCTestCase {
         if let advertisement = self.advertisements?.first,
            let navigationController = UIApplication.shared.windows.first!.rootViewController as? UINavigationController,
            let advertisementsViewController = navigationController.topViewController as? AdvertisementsViewController {
-            advertisementsRouter.pushToAdvertisementDetail(on:advertisementsViewController, with: advertisement)
+            advertisementsRouter.presentAdvertisementDetail(on:advertisementsViewController, with: advertisement)
             XCTAssertTrue(advertisementsViewController.navigationController?.visibleViewController is AdvertisementDetailViewController)
         }
     }

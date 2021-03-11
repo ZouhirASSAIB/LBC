@@ -11,6 +11,7 @@ import XCTest
 class AdvertisementsInteractorTests: XCTestCase {
     
     class FakeAdvertisementsInteractor: PresenterToInteractorAdvertisementsProtocol {
+        
         var presenter: InteractorToPresenterAdvertisementsProtocol?
         
         var advertisementsAPIService: AdvertisementsAPIServiceProtocol?
@@ -21,7 +22,7 @@ class AdvertisementsInteractorTests: XCTestCase {
         
         var categories: Categories?
         
-        func loadAdvertisements() {
+        func loadAdvertisements(categoryID: Int?) {
             
             StubCategoriesService().getCategories(success: { categories in
                 self.categories = categories
@@ -42,6 +43,13 @@ class AdvertisementsInteractorTests: XCTestCase {
                 return
             }
             self.presenter?.getAdvertisementSuccess(advertisements[index])
+        }
+        
+        func presentCategories() {
+            guard let categories = self.categories else {
+                return
+            }
+            self.presenter?.getCategoriesSuccess(categories)
         }
     }
     
@@ -65,7 +73,7 @@ class AdvertisementsInteractorTests: XCTestCase {
     func testThatItRetrievesCategoriesAndAdvertisements() {
         let testExpectation = expectation(description: #function)
         
-        interactor.loadAdvertisements()
+        interactor.loadAdvertisements(categoryID: nil)
         
         XCTAssertEqual(interactor.categories?.count, 1)
         XCTAssertEqual(interactor.categories?.first?.id, 6)
@@ -83,7 +91,7 @@ class AdvertisementsInteractorTests: XCTestCase {
     func testThatItRetrievesAdvertisement() {
         let testExpectation = expectation(description: #function)
         
-        interactor.loadAdvertisements()
+        interactor.loadAdvertisements(categoryID: nil)
         interactor.retrieveAdvertisement(at: 0)
         
         XCTAssertEqual(self.presenter.categories?.count, 1)

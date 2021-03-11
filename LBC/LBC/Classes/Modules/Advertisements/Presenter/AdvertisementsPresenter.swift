@@ -17,17 +17,18 @@ class AdvertisementsPresenter: ViewToPresenterAdvertisementsProtocol {
     
     var advertisements: Advertisements?
     var categories: Categories?
+    var categoryID: Int?
     
     // MARK: Inputs from view
     func viewDidLoad() {
-        print("Presenter is being notified that the View was loaded.")
+        print("AdvertisementsPresenter is being notified that the View was loaded.")
         view?.presentActivity()
-        interactor?.loadAdvertisements()
+        interactor?.loadAdvertisements(categoryID: categoryID)
     }
     
     func refresh() {
-        print("Presenter is being notified that the View was refreshed.")
-        interactor?.loadAdvertisements()
+        print("AdvertisementsPresenter is being notified that the View was refreshed.")
+        interactor?.loadAdvertisements(categoryID: categoryID)
     }
     
     func numberOfRowsInSection() -> Int {
@@ -117,31 +118,35 @@ class AdvertisementsPresenter: ViewToPresenterAdvertisementsProtocol {
     func deselectRowAt(index: Int) {
         view?.deselectRowAt(row: index)
     }
+    
+    func presentCategories() {
+        interactor?.presentCategories()
+    }
 }
 
 // MARK: - Outputs to view
 extension AdvertisementsPresenter: InteractorToPresenterAdvertisementsProtocol {
     func fetchCategoriesSuccess(categories: Categories) {
-        print("Presenter receives the categories result from Interactor after it's done its job.")
+        print("AdvertisementsPresenter receives the categories result from Interactor after it's done its job.")
         self.categories = categories.compactMap { $0 }
     }
     
     
     func fetchAdvertisementsSuccess(advertisements: Advertisements) {
-        print("Presenter receives the advertisements result from Interactor after it's done its job.")
+        print("AdvertisementsPresenter receives the advertisements result from Interactor after it's done its job.")
         self.advertisements = advertisements.compactMap { $0 }
         view?.dismissActivity()
         view?.onFetchAdvertisementsSuccess()
     }
     
     func fetchAdvertisementsFailure(error: Error) {
-        print("Presenter receives the result from Interactor after it's done its job.")
+        print("AdvertisementsPresenter receives the result from Interactor after it's done its job.")
         view?.dismissActivity()
         view?.onFetchAdvertisementsFailure(error: error)
     }
     
     func getAdvertisementSuccess(_ advertisement: AdvertisementModel) {
-        router?.pushToAdvertisementDetail(on: view!, with: advertisement)
+        router?.presentAdvertisementDetail(on: view!, with: advertisement)
     }
     
     func getAdvertisementFailure() {
@@ -149,5 +154,7 @@ extension AdvertisementsPresenter: InteractorToPresenterAdvertisementsProtocol {
         print("Couldn't retrieve advertisement by index")
     }
     
-    
+    func getCategoriesSuccess(_ categories: Categories) {
+        router?.presentCategories(on: view!, with: categories)
+    }
 }

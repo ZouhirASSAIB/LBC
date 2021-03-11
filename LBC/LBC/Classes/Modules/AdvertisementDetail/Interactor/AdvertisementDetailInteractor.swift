@@ -22,29 +22,17 @@ class AdvertisementDetailInteractor: PresenterToInteractorAdvertisementDetailPro
             
             if let thumb = advertisement.imagesURL?.thumb,
                let thumbURL = URL(string: thumb) {
+                
+                let task = URLSession.shared.dataTask(with: thumbURL) { data, response, error in
                     
-                    let task = URLSession.shared.dataTask(with: thumbURL) { data, response, error in
-                        
-                        if let data = data, let image = UIImage(data: data) {
-                            self.presenter?.getImageFromURLSuccess(image: image)
-                            return
-                        }
-                        
-                        guard let error = error else {
-                            self.presenter?.getImageFromURLFailure(advertisement: advertisement)
-                            return
-                        }
-                        
-                        guard (error as NSError).code == NSURLErrorCancelled else {
-                            self.presenter?.getImageFromURLFailure(advertisement: advertisement)
-                            return
-                        }
+                    if let data = data, let image = UIImage(data: data) {
+                        self.presenter?.getImageFromURLSuccess(image: image)
+                        return
                     }
-                    
-                    task.resume()
-                } else {
-                    self.presenter?.getImageFromURLFailure(advertisement: advertisement)
                 }
+                
+                task.resume()
+            }
         }
     }
 }

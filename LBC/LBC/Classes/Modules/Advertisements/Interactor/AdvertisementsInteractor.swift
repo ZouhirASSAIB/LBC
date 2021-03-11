@@ -19,8 +19,8 @@ class AdvertisementsInteractor: PresenterToInteractorAdvertisementsProtocol {
     var advertisements: Advertisements?
     var categories: Categories?
     
-    func loadAdvertisements() {
-        print("Interactor receives the request from Presenter to load categories and advertisements from the server.")
+    func loadAdvertisements(categoryID: Int?) {
+        print("AdvertisementsInteractor receives the request from Presenter to load categories and advertisements from the server.")
         
         self.categoriesAPIService?.getCategories(success: { (categories) in
             self.categories = categories
@@ -29,19 +29,16 @@ class AdvertisementsInteractor: PresenterToInteractorAdvertisementsProtocol {
         
         self.advertisementsAPIService?.getAdvertisements(success: { (advertisements) in
             
-            self.advertisements = advertisements.sorted {
-                
-                guard let firstCreationDate = $0.creationDate,
-                      let secondCreationDate = $1.creationDate,
-                      let firstDate = AppDateFormatter.shared.isoDate(from:firstCreationDate),
-                      let secondDate = AppDateFormatter.shared.isoDate(from:secondCreationDate),
-                      let firstIsUrgent = $0.isUrgent,
-                      let secondIsUrgent = $1.isUrgent else {
-                    return false
-                }
-                
-                return firstIsUrgent == secondIsUrgent ? firstDate.compare(secondDate) == .orderedDescending :
-                    (firstIsUrgent && !secondIsUrgent)
+            var filteredAdvertisements:Advertisements? = nil
+            
+            if let categoryID = categoryID {
+                filteredAdvertisements = advertisements.filter { $0.categoryID == categoryID }
+            }
+            
+            if let filteredAdvertisements = filteredAdvertisements {
+                self.advertisements = self.sort(advertisements: filteredAdvertisements)
+            } else {
+                self.advertisements = self.sort(advertisements: advertisements)
             }
             
             if let advertisements = self.advertisements {
@@ -58,5 +55,33 @@ class AdvertisementsInteractor: PresenterToInteractorAdvertisementsProtocol {
             return
         }
         self.presenter?.getAdvertisementSuccess(advertisements[index])
+    }
+    
+    func presentCategories() {
+        guard let categories = self.categories else {
+            return
+        }
+        self.presenter?.getCategoriesSuccess(categories)
+    }
+}
+
+extension AdvertisementsInteractor {
+    
+    func sort(advertisements: Advertisements) -> Advertisements {
+        
+        return advertisements.sorted {
+            
+            guard let firstCreationDate = $0.creationDate,
+                  let secondCreationDate = $1.creationDate,
+                  let firstDate = AppDateFormatter.shared.isoDate(from:firstCreationDate),
+                  let secondDate = AppDateFormatter.shared.isoDate(from:secondCreationDate),
+                  let firstIsUrgent = $0.isUrgent,
+                  let secondIsUrgent = $1.isUrgent else {
+                return false
+            }
+            
+            return firstIsUrgent == secondIsUrgent ? firstDate.compare(secondDate) == .orderedDescending :
+                (firstIsUrgent && !secondIsUrgent)
+        }
     }
 }

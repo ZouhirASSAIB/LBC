@@ -51,7 +51,7 @@ class AdTableViewCell : UITableViewCell {
     }()
     
     private let advertisementImage : UIImageView = {
-        let imageView = UIImageView(image: UIImage(named: "Placeholder"))
+        let imageView = UIImageView(image: UIImage(named: "PlaceholderImage"))
         imageView.contentMode = .scaleAspectFit
         imageView.clipsToBounds = true
         return imageView
@@ -102,7 +102,7 @@ class AdTableViewCell : UITableViewCell {
     
     override func prepareForReuse() {
         super.prepareForReuse()
-        advertisementImage.image = UIImage(named: "Placeholder")
+        advertisementImage.image = UIImage(named: "PlaceholderImage")
         advertisementImage.cancelImageLoad()
     }
     

@@ -20,13 +20,41 @@ class AdvertisementDetailViewController: UIViewController {
     
     // MARK: - Properties
     var presenter: ViewToPresenterAdvertisementDetailProtocol?
+    let tap = UITapGestureRecognizer(target: self, action: #selector(dismissFullScreenImage))
     
     lazy var advertisementImage : UIImageView = {
-        let imageView = UIImageView(image: UIImage(named: "Placeholder"))
+        let imageView = UIImageView(image: UIImage(named: "PlaceholderImage"))
         imageView.contentMode = .scaleAspectFit
         imageView.clipsToBounds = true
         imageView.translatesAutoresizingMaskIntoConstraints = false
+        let tapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(displayFullScreenImage))
+        imageView.addGestureRecognizer(tapGestureRecognizer)
+        imageView.isUserInteractionEnabled = true
         return imageView
+    }()
+    
+    lazy var advertisementFullScreenImage : UIImageView = {
+        let fullScreenImageView = UIImageView(image:  self.advertisementImage.image)
+        fullScreenImageView.frame = self.view.frame
+        fullScreenImageView.backgroundColor = .black
+        fullScreenImageView.contentMode = .scaleAspectFit
+        fullScreenImageView.isUserInteractionEnabled = true
+        fullScreenImageView.addGestureRecognizer(tap)
+        return fullScreenImageView
+    }()
+    
+    lazy var dismissButton : UIButton = {
+        let button = UIButton()
+        button.setImage(UIImage(named: "CloseImage"), for: .normal)
+        button.addTarget(self, action: #selector(dismiss), for: .touchUpInside)
+        return button
+    }()
+    
+    lazy var closeButton : UIButton = {
+        let button = UIButton()
+        button.setImage(UIImage(named: "CloseImage"), for: .normal)
+        button.addTarget(self, action: #selector(close), for: .touchUpInside)
+        return button
     }()
     
     lazy var advertisementTitleLabel : UILabel = {
@@ -50,9 +78,34 @@ class AdvertisementDetailViewController: UIViewController {
         return label
     }()
     
+    lazy var advertisementUrgentImage : UIImageView = {
+        let imageView = UIImageView(image: UIImage(named: "UrgentImage"))
+        imageView.heightAnchor.constraint(equalToConstant: 15).isActive = true
+        imageView.widthAnchor.constraint(equalToConstant: 15).isActive = true
+        imageView.contentMode = .scaleAspectFit
+        imageView.clipsToBounds = true
+        imageView.translatesAutoresizingMaskIntoConstraints = false
+        return imageView
+    }()
+    
     lazy var advertisementDescriptionLabel : UILabel = {
         let label = UILabel()
+        label.text = "Description"
+        label.basicUILabel(fontSize: 14, bold: true)
+        label.translatesAutoresizingMaskIntoConstraints = false
+        return label
+    }()
+    
+    lazy var advertisementDescriptionValueLabel : UILabel = {
+        let label = UILabel()
         label.basicUILabel(fontSize: 14, numberOfLines: 0)
+        label.translatesAutoresizingMaskIntoConstraints = false
+        return label
+    }()
+    
+    lazy var advertisementSiretLabel : UILabel = {
+        let label = UILabel()
+        label.basicUILabel(fontSize: 14, textAlignment: .center)
         label.translatesAutoresizingMaskIntoConstraints = false
         return label
     }()
@@ -67,6 +120,8 @@ class AdvertisementDetailViewController: UIViewController {
         let stackView = UIStackView()
         stackView.translatesAutoresizingMaskIntoConstraints = false
         stackView.axis = .vertical
+        stackView.layoutMargins = UIEdgeInsets(top: 10, left: 0, bottom: 0, right: 0)
+        stackView.isLayoutMarginsRelativeArrangement = true
         return stackView
     }()
     
@@ -75,6 +130,17 @@ class AdvertisementDetailViewController: UIViewController {
         stackView.translatesAutoresizingMaskIntoConstraints = false
         stackView.axis = .vertical
         stackView.spacing = 10
+        stackView.layoutMargins = UIEdgeInsets(top: 0, left: 10, bottom: 0, right: 10)
+        stackView.isLayoutMarginsRelativeArrangement = true
+        return stackView
+    }()
+    
+    lazy var horizontalStackView : UIStackView = {
+        let stackView = UIStackView(frame: self.subStackView.frame)
+        stackView.axis = .horizontal
+        stackView.distribution = .equalSpacing
+        stackView.alignment = .center
+        stackView.translatesAutoresizingMaskIntoConstraints = false
         return stackView
     }()
 }
@@ -82,7 +148,7 @@ class AdvertisementDetailViewController: UIViewController {
 extension AdvertisementDetailViewController: PresenterToViewAdvertisementDetailProtocol {
     
     func onGetImageFromURLSuccess(thumbImage: UIImage) {
-        print("View receives the response from Presenter and updates itself.")
+        print("AdvertisementDetailViewController receives the success response from Presenter and updates itself.")
         
         DispatchQueue.main.async {
             self.advertisementImage.image = thumbImage
@@ -90,8 +156,9 @@ extension AdvertisementDetailViewController: PresenterToViewAdvertisementDetailP
     }
     
     func onGetImageFromURLFailure(title: String?, description: String?, price: String?, creationDate: String?, isUrgent: Bool?, siret: String?) {
-        print("View receives the response from Presenter and updates itself.")
+        print("AdvertisementDetailViewController receives the failure response from Presenter and updates itself.")
         DispatchQueue.main.async {
+            
             if let title = title, !title.isEmpty {
                 self.advertisementTitleLabel.text = title
             }
@@ -104,8 +171,16 @@ extension AdvertisementDetailViewController: PresenterToViewAdvertisementDetailP
                 self.advertisementCreationDateLabel.text = creationDate
             }
             
+            if let isUrgent = isUrgent, !isUrgent {
+                self.advertisementUrgentImage.isHidden = !isUrgent
+            }
+            
             if let description = description, !description.isEmpty {
-                self.advertisementDescriptionLabel.text = description
+                self.advertisementDescriptionValueLabel.text = description
+            }
+            
+            if let siret = siret, !siret.isEmpty {
+                self.advertisementSiretLabel.text = "N° SIREN \(siret.replacingOccurrences(of: " ", with: ""))"
             }
         }
     }
@@ -140,16 +215,29 @@ extension AdvertisementDetailViewController {
         
         self.scrollView.addSubview(self.advertisementImage)
         
+        self.advertisementImage.addSubview(self.dismissButton)
+        
+        self.dismissButton.anchor(top: self.scrollView.topAnchor, left: self.scrollView.leftAnchor,
+                                        bottom: nil, right: nil,
+                                        paddingTop: 15, paddingLeft: 15,
+                                        paddingBottom: 0, paddingRight: 0,
+                                        width: 30, height: 30, enableInsets: false)
+        
         self.advertisementImage.anchor(top: self.scrollView.topAnchor, left: self.scrollView.leftAnchor,
                                        bottom: nil, right: self.scrollView.rightAnchor,
                                        paddingTop: 0, paddingLeft: 0,
                                        paddingBottom: 0, paddingRight: 0,
-                                       width: 0, height: 300, enableInsets: false)
+                                       width: 0, height: 250, enableInsets: false)
         
         self.subStackView.addArrangedSubview(self.advertisementTitleLabel)
         self.subStackView.addArrangedSubview(self.advertisementPriceLabel)
-        self.subStackView.addArrangedSubview(self.advertisementCreationDateLabel)
+        self.horizontalStackView.addArrangedSubview(self.advertisementCreationDateLabel)
+        self.horizontalStackView.addArrangedSubview(self.advertisementUrgentImage)
+        self.subStackView.addArrangedSubview(horizontalStackView)
         self.subStackView.addArrangedSubview(self.advertisementDescriptionLabel)
+        self.subStackView.addArrangedSubview(self.advertisementDescriptionValueLabel)
+        self.subStackView.addArrangedSubview(self.advertisementSiretLabel)
+        
         self.stackView.addArrangedSubview(subStackView)
         self.scrollView.addSubview(stackView)
         
@@ -159,9 +247,33 @@ extension AdvertisementDetailViewController {
         self.stackView.trailingAnchor.constraint(equalTo: self.scrollView.trailingAnchor).isActive = true
         self.stackView.bottomAnchor.constraint(equalTo: self.scrollView.bottomAnchor).isActive = true
         self.stackView.widthAnchor.constraint(equalTo: self.view.widthAnchor).isActive = true
-        
-        // Add subStackView to handle Layout Margins
-        self.subStackView.layoutMargins = UIEdgeInsets(top: 0, left: 10, bottom: 0, right: 10)
-        self.subStackView.isLayoutMarginsRelativeArrangement = true
+    }
+}
+
+// MARK: - Actions
+extension AdvertisementDetailViewController {
+    
+    @objc func dismiss(sender: UIButton) {
+        self.dismiss(animated: true)
+    }
+    
+    @objc func close(sender: UIButton) {
+       self.dismissFullScreenImage(sender: self.tap)
+    }
+    
+    @objc func displayFullScreenImage(sender: UITapGestureRecognizer) {
+        if sender.state == .ended {
+            self.view.addSubview(self.advertisementFullScreenImage)
+            self.advertisementFullScreenImage.addSubview(self.closeButton)
+            self.closeButton.anchor(top: self.scrollView.topAnchor, left: nil,
+                                            bottom: nil, right: self.scrollView.rightAnchor,
+                                            paddingTop: 15, paddingLeft: 0,
+                                            paddingBottom: 0, paddingRight: 15,
+                                            width: 30, height: 30, enableInsets: false)
+        }
+    }
+    
+    @objc func dismissFullScreenImage(sender: UITapGestureRecognizer) {
+        sender.view?.removeFromSuperview()
     }
 }

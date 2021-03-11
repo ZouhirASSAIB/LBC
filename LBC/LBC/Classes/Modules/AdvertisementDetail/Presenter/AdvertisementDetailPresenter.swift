@@ -15,7 +15,7 @@ class AdvertisementDetailPresenter: ViewToPresenterAdvertisementDetailProtocol {
     var router: PresenterToRouterAdvertisementDetailProtocol?
     
     func viewDidLoad() {
-        print("Presenter is being notified that the View was loaded.")
+        print("AdvertisementDetailPresenter is being notified that the View was loaded.")
         interactor?.getImageDataFromURL()
     }
     
@@ -24,13 +24,13 @@ class AdvertisementDetailPresenter: ViewToPresenterAdvertisementDetailProtocol {
 extension AdvertisementDetailPresenter: InteractorToPresenterAdvertisementDetailProtocol {
     
     func getImageFromURLSuccess(image: UIImage) {
-        print("Presenter receives the result from Interactor after it's done its job.")
+        print("AdvertisementDetailPresenter receives the success result from Interactor after it's done its job.")
         
         view?.onGetImageFromURLSuccess(thumbImage: image)
     }
     
     func getImageFromURLFailure(advertisement: AdvertisementModel) {
-        print("Presenter receives the result from Interactor after it's done its job.")
+        print("AdvertisementDetailPresenter receives the failure result from Interactor after it's done its job.")
         
         let realDate = AppDateFormatter.shared.isoDate(from: advertisement.creationDate)
         let longDateShortTime = AppDateFormatter.shared.longDateShortTimeString(from: realDate)
